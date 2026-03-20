@@ -1,0 +1,19 @@
+[project]
+name = "textmining-grp6"
+version = "0.1.0"
+requires-python = ">=3.11"
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "matplotlib",
+    "seaborn",
+    "scikit-learn",
+    "torch",
+    "torchvision",
+    "transformers",
+    "datasets",
+    "accelerate",
+    "nbformat",
+    "ipykernel",
+]
