@@ -16,4 +16,12 @@ dependencies = [
     "accelerate",
     "nbformat",
     "ipykernel",
+    # BERTopic / Topic Modeling
+    "bertopic",
+    "umap-learn",
+    "hdbscan",
+    "sentence-transformers",
+    "gensim",
+    "wordcloud",
+    "plotly",
 ]
