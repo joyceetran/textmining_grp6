@@ -24,4 +24,6 @@ dependencies = [
     "gensim",
     "wordcloud",
     "plotly",
+    "spark>=0.2.1",
+    "pyspark>=4.1.1",
 ]
