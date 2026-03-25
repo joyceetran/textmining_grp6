@@ -1,2 +1,9 @@
 Filings/
+MDA/
 MDA/_extraction_summary.csv
+.gitattributes
+CLAUDE.md
+Data Preparation/mda_doc_level.parquet
+Data Preparation/mda_sent_level.csv
+Data Preparation/mda_sent_level.parquet
+Data Preparation/mda_doc_level.csv
