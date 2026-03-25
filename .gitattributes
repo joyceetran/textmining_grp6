@@ -3,3 +3,4 @@
 TopicModeling/bertopic.ipynb filter=lfs diff=lfs merge=lfs -text
 datasets/ filter=lfs diff=lfs merge=lfs -text
 datasets/** filter=lfs diff=lfs merge=lfs -text
+*.csv filter=lfs diff=lfs merge=lfs -text
