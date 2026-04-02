@@ -105,7 +105,7 @@ def build_count_matrix(processed_docs: list[str]):
     vectorizer = CountVectorizer(
         min_df=10,                # token must appear in at least 10 documents -- remove rare words
         max_df=0.90,             # ignore tokens in >90% of documents -- remove too common words
-        max_features=50_000,     # cap vocabulary size
+        max_features=10_000,     # cap vocabulary size (capped at 10000 features)
         ngram_range=(1, 2),      # allow bi grams
     )
  
