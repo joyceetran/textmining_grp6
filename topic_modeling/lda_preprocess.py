@@ -39,6 +39,17 @@ FINANCE_STOPWORDS = {
     # spaCy lemmatization artifacts
     "datum",   # "data" → "datum"
     "agendum", # "agenda" → "agendum"
+    # company-specific stop word,
+    "garmin", "interdigital", "honeywell", "ford", "microstrategy", "apple",
+    "itero", "sofi", "fpl", "google", "sogou", "iac", "yelp", "sohu", "thryv",
+    "changyou", "intel", "amd", "citi", "citis", "howmet", "zebra", "zillow",
+    "expedia", "fedex", "amazon", "shotspotter", "pmi", "deere", "disney",
+    "sprint", "hulu", "verizon", "abbvie", "welltower", "dell", "vmware",
+    "broadcom", "etsy", "soundhound", "bumble", "blackstone", "fortress",
+    "caterpillar", "cat", "adtalem", "corning", "devry", "ihs", "markit",
+    "ihs markit", "veeva", "adobe", "visa", "newmont", "exxonmobil", "duke",
+    "altria", "kkr", "abbott", "finjan", "rockstar", "microsoft", "nba",
+    "xbox", "wells fargo", "pnc", "mercado", "nee"
 }
 
 GEO_STOPWORDS = {
@@ -66,6 +77,10 @@ GEO_STOPWORDS = {
     "australia", "netherlands", "sweden", "finland",
     "north america", "south america", "latin america", "europe",
     "asia pacific", "middle east", "apac", "emea", "americas",
+    "brazil", "latin america", "mexico", "argentina", "africa", "venezuela",
+    "chile", "colombia", "north america", "middle east", "latin", "asia pacific",
+    "asia", "pacific", "shanghai", "prc", "ukraine", "south", "european",
+    "mexican", "western", "north american", "american"
 }
 
 
