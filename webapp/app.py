@@ -308,13 +308,11 @@ with tab2:
     yoy     = sc_now - sc_prev if not (np.isnan(sc_now) or np.isnan(sc_prev)) else np.nan
 
     m1, m2, m3 = st.columns(3)
-    m1.metric("Latest score", fmt_score(sc_now), None if np.isnan(yoy) else fmt_score(yoy))
-    m2.metric("Topic", dn(sel_topic))
+    m1.metric("Latest Sentiment Score", fmt_score(sc_now), None if np.isnan(yoy) else fmt_score(yoy),
+              help="Average FinBERT sentiment score. Positive = optimistic tone, Negative = cautious/risk tone.")
+    m2.markdown("**Selected Topic**")
+    m2.markdown(f"<span style='font-size:1.1rem'>{dn(sel_topic)}</span>", unsafe_allow_html=True)
     m3.metric("Company", dn(t2_co))
-
-    t2_trend_view = st.selectbox(
-        "Trend chart filter", ["Both", "Topic only", "Overall only"], key="t2_trend_view"
-    )
 
     def _period_df(df):
         if not len(df):
@@ -328,21 +326,41 @@ with tab2:
                          .groupby(["year", "quarter"])["sentiment_score"].mean().reset_index())
     overall = _period_df(co_data.groupby(["year", "quarter"])["sentiment_score"].mean().reset_index())
 
+    st.markdown(f"**Quarterly Sentiment: {dn(sel_topic)} vs Overall**")
+    st.caption("Hover over data points to see exact values. The dotted line is the company's overall average sentiment across all topics.")
+
     fig_t = go.Figure()
-    if len(overall) and t2_trend_view in ["Both", "Overall only"]:
+    if len(overall):
         fig_t.add_trace(go.Scatter(
             x=overall["period"], y=overall["sentiment_score"],
             name="Overall avg", mode="lines",
-            line=dict(color="#7f7f7f", width=1.8, dash="dot"),
+            line=dict(color="#aaaaaa", width=1.8, dash="dot"),
+            hovertemplate="Period: %{x}<br>Overall sentiment: %{y:.3f}<extra>Overall avg</extra>",
         ))
-    if len(trend) and t2_trend_view in ["Both", "Topic only"]:
+    if len(trend):
         fig_t.add_trace(go.Scatter(
             x=trend["period"], y=trend["sentiment_score"],
             name=dn(sel_topic), mode="lines+markers",
             line=dict(color="#1f77b4", width=2.5), marker=dict(size=6),
+            hovertemplate="Period: %{x}<br>Topic sentiment: %{y:.3f}<extra>" + dn(sel_topic) + "</extra>",
         ))
-    fig_t.update_layout(height=430, yaxis_title="Sentiment", xaxis_title="Period")
+    fig_t.add_hline(y=0, line_dash="solid", line_color="red", line_width=1, opacity=0.4,
+                    annotation_text="Neutral (0)", annotation_position="bottom right")
+    # Show only year labels on x-axis to reduce clutter
+    all_periods = overall["period"].tolist() if len(overall) else trend["period"].tolist()
+    year_ticks  = [p for p in all_periods if p.endswith("Q1")]
+    fig_t.update_layout(
+        height=430,
+        yaxis_title="Sentiment Score",
+        xaxis_title="Quarter",
+        xaxis=dict(tickvals=year_ticks, ticktext=[p.split(" ")[0] for p in year_ticks], tickangle=0),
+        legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+        hovermode="x unified",
+    )
     st.plotly_chart(fig_t, use_container_width=True)
+
+    st.markdown(f"**Annual Sentiment Label Breakdown — {dn(t2_co)}**")
+    st.caption("Proportion of MD&A sentences classified as Positive, Neutral, or Negative by FinBERT each year.")
 
     dist = co_data.groupby(["year", "finbert_label"]).size().reset_index(name="n")
     if len(dist):
@@ -356,8 +374,15 @@ with tab2:
             fig_bar.add_trace(go.Bar(
                 x=sub["year"], y=sub["pct"],
                 name=lbl.capitalize(), marker_color=label_colors[lbl],
+                hovertemplate="Year: %{x}<br>" + lbl.capitalize() + ": %{y:.1f}%<extra></extra>",
             ))
-        fig_bar.update_layout(barmode="stack", height=330, yaxis_title="% of sentences")
+        fig_bar.update_layout(
+            barmode="stack", height=330,
+            yaxis_title="% of Sentences",
+            xaxis_title="Year",
+            xaxis=dict(tickmode="linear", dtick=1),
+            legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="left", x=0),
+        )
         st.plotly_chart(fig_bar, use_container_width=True)
 
 
@@ -532,9 +557,8 @@ with tab5:
             fig_bubble = go.Figure(go.Scatter(
                 x=topic_stats["docs"],
                 y=topic_stats["avg_sentiment"],
-                mode="markers+text",
+                mode="markers",
                 text=topic_stats["Topic"],
-                textposition="top center",
                 marker=dict(
                     size=np.clip(topic_stats["avg_topic_prob"].fillna(0.3) * 65, 10, 60),
                     color=topic_stats["avg_sentiment"],
@@ -542,7 +566,7 @@ with tab5:
                     colorbar=dict(title="Avg sentiment"),
                     line=dict(width=1, color="#333"), opacity=0.85,
                 ),
-                hovertemplate="Topic: %{text}<br>Docs: %{x}<br>Avg sentiment: %{y:.3f}<extra></extra>",
+                hovertemplate="<b>%{text}</b><br>Docs: %{x}<br>Avg sentiment: %{y:.3f}<extra></extra>",
             ))
             fig_bubble.update_layout(
                 height=460,
