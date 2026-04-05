@@ -360,7 +360,7 @@ with tab2:
         m1.metric("Latest Sentiment Score", fmt_score(sc_now), None if np.isnan(yoy) else fmt_score(yoy),
                   help="Average FinBERT sentiment score. Positive = optimistic tone, Negative = cautious/risk tone.")
         m2.markdown("**Selected Topic**")
-        m2.markdown(f"<span style='font-size:1.1rem'>{dn(sel_topic)}</span>", unsafe_allow_html=True)
+        m2.markdown(f"<span style='font-size:1.1rem'>{dn(t2_topic)}</span>", unsafe_allow_html=True)
         m3.metric("Company", dn(t2_co))
 
     t2_trend_view = st.selectbox(
