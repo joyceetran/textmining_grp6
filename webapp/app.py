@@ -244,7 +244,7 @@ with tab1:
         ctrl1, ctrl2 = st.columns([1.1, 0.9])
         t1_line_mode = ctrl1.selectbox("Line chart filter", ["All", "Top", "Bottom"], key="t1_line_mode")
         max_line_n   = max(1, min(10, len(selected)))
-        t1_line_n    = ctrl2.slider("N companies", 1, max_line_n, min(5, max_line_n), key="t1_line_n")
+        t1_line_n    = ctrl2.slider("N companies", 1, max_line_n, min(5, max_line_n), key="t1_line_n") if max_line_n > 1 else 1
 
         ranked_all      = ranked_company_scores(selected, sel_year, sel_q)
         ranked_filtered = apply_top_bottom(ranked_all, t1_line_mode, t1_line_n)
@@ -282,7 +282,7 @@ with tab1:
         ctrl3, ctrl4 = st.columns([1.1, 0.9])
         t1_topic_mode = ctrl3.selectbox("Topic table filter", ["All", "Top", "Bottom"], key="t1_topic_mode")
         max_topics    = max(1, min(10, len(all_topics)))
-        t1_topic_n    = ctrl4.slider("N topics", 1, max_topics, min(5, max_topics), key="t1_topic_n")
+        t1_topic_n    = ctrl4.slider("N topics", 1, max_topics, min(5, max_topics), key="t1_topic_n") if max_topics > 1 else 1
 
         p_ts = portfolio_topic_scores(weights, sel_year, sel_q)
         if len(p_ts):
@@ -368,7 +368,7 @@ with tab3:
     pctrl1, pctrl2 = st.columns([1.1, 0.9])
     peer_line_mode  = pctrl1.selectbox("Line chart filter", ["All", "Top", "Bottom"], key="peer_line_mode")
     max_peer_n      = max(1, min(10, len(selected)))
-    peer_line_n     = pctrl2.slider("N companies (peer line)", 1, max_peer_n, min(5, max_peer_n), key="peer_line_n")
+    peer_line_n     = pctrl2.slider("N companies (peer line)", 1, max_peer_n, min(5, max_peer_n), key="peer_line_n") if max_peer_n > 1 else 1
 
     peer_rank     = ranked_company_scores(selected, sel_year, sel_q, topic=sel_topic)
     peer_line_df  = apply_top_bottom(peer_rank, peer_line_mode, peer_line_n)
@@ -396,7 +396,7 @@ with tab3:
     rctrl1, rctrl2 = st.columns([1.1, 0.9])
     peer_rank_mode = rctrl1.selectbox("Ranking filter", ["All", "Top", "Bottom"], key="peer_rank_mode")
     max_rank_n     = max(1, min(10, len(selected)))
-    peer_rank_n    = rctrl2.slider("N companies (ranking)", 1, max_rank_n, min(5, max_rank_n), key="peer_rank_n")
+    peer_rank_n    = rctrl2.slider("N companies (ranking)", 1, max_rank_n, min(5, max_rank_n), key="peer_rank_n") if max_rank_n > 1 else 1
 
     rank_df = ranked_company_scores(selected, sel_year, sel_q, topic=sel_topic)
     if len(rank_df):
@@ -458,7 +458,7 @@ with tab4:
             fctrl1, fctrl2 = st.columns([1.1, 0.9])
             t4_topic_mode = fctrl1.selectbox("Topic breakdown filter", ["All", "Top", "Bottom"], key="t4_topic_mode")
             max_t4        = max(1, min(10, len(topic_df)))
-            t4_topic_n    = fctrl2.slider("N topics (filing)", 1, max_t4, min(5, max_t4), key="t4_topic_n")
+            t4_topic_n    = fctrl2.slider("N topics (filing)", 1, max_t4, min(5, max_t4), key="t4_topic_n") if max_t4 > 1 else 1
             if t4_topic_mode == "Top":
                 topic_df = topic_df.head(t4_topic_n)
             elif t4_topic_mode == "Bottom":
@@ -493,7 +493,7 @@ with tab5:
     tm_c1, tm_c2 = st.columns([1, 1])
     tm_topic_mode = tm_c1.selectbox("Topic list filter", ["All", "Top", "Bottom"], key="tm_topic_mode")
     max_tm        = max(1, min(15, len(all_topics)))
-    tm_n_topics   = tm_c2.slider("N topics", 1, max_tm, min(8, max_tm), key="tm_n_topics")
+    tm_n_topics   = tm_c2.slider("N topics", 1, max_tm, min(8, max_tm), key="tm_n_topics") if max_tm > 1 else 1
 
     tm_df = merged[merged["company_name"].isin(selected)].copy()
     if sel_year is not None:
@@ -565,7 +565,7 @@ with tab5:
             with right_tm:
                 st.write("Company-topic distribution")
                 max_dist = max(1, min(12, len(topic_stats)))
-                top_topic_n = st.slider("Topics in distribution", 1, max_dist, min(6, max_dist), key="tm_dist_n")
+                top_topic_n = st.slider("Topics in distribution", 1, max_dist, min(6, max_dist), key="tm_dist_n") if max_dist > 1 else 1
                 top_topics  = topic_stats["Topic"].head(top_topic_n).tolist()
                 dist = (
                     tm_df[tm_df["topic_label"].isin(top_topics)]
