@@ -392,14 +392,19 @@ with st.sidebar:
 
     # Initialise session-state weights; reset stale keys for deselected companies
     active_keys = {f"w_{c}" for c in selected}
-    for k in list(st.session_state.keys()):
-        if k.startswith("w_") and k not in active_keys:
-            del st.session_state[k]
+    # for k in list(st.session_state.keys()):
+    #     if k.startswith("w_") and k not in active_keys:
+    #         del st.session_state[k]
     for c in selected:
         if f"w_{c}" not in st.session_state:
             st.session_state[f"w_{c}"] = default_w
 
     def _sync_weights(changed_c):
+        key = f"w_{changed_c}"
+        if key not in st.session_state:
+            return
+        
+        new_val = max(0, min(100, st.session_state[key]))
         new_val = max(0, min(100, st.session_state[f"w_{changed_c}"]))
         others = [c for c in selected if c != changed_c]
         if not others:
@@ -436,7 +441,8 @@ with st.sidebar:
             args=(c,),
         )
 
-    w_raw = {c: st.session_state[f"w_{c}"] for c in selected}
+    # w_raw = {c: st.session_state[f"w_{c}"] for c in selected}
+    w_raw = {c: st.session_state.get(f"w_{c}", default_w) for c in selected}
     total_raw = sum(w_raw.values()) or 1
     weights = {c: v / total_raw for c, v in w_raw.items()}
 
