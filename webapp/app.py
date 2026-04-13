@@ -128,6 +128,177 @@ co_colors = {
     c: COMPANY_PALETTE[i % len(COMPANY_PALETTE)] for i, c in enumerate(all_cos)
 }
 
+# ── Sector / industry classification ─────────────────────────────────────────
+# Maps company_name (as it appears in the dataset) to a sector string.
+# Companies not in this map default to "Technology".
+_SECTOR_OF: dict = {
+    **dict.fromkeys([
+        "NVIDIA", "AMD", "Intel", "Broadcom", "QUALCOMM", "Texas_Instruments",
+        "Microchip_Technology", "Micron_Technology", "Marvell_Technology",
+        "ON_Semiconductor", "NXP_Semiconductors", "Skyworks_Solutions", "Qorvo",
+        "Lattice_Semiconductor", "Silicon_Labs", "Monolithic_Power_Systems",
+        "Analog_Devices", "Cirrus_Logic", "MACOM", "Ambarella",
+        "Allegro_MicroSystems", "Alpha__amp__Omega_Semiconductor", "CEVA",
+        "Navitas_Semiconductor", "Semtech", "Power_Integrations", "SiTime",
+        "MaxLinear", "Pixelworks", "Everspin_Technologies", "GCT_Semiconductor",
+        "Intchains_Group", "Magnachip_Semiconductor", "Vishay_Intertechnology",
+        "Wolfspeed", "indie_Semiconductor", "Silvaco_Group", "Aeluma",
+        "Lightwave_Logic", "Coherent_Corp_", "Quicklogic", "nLIGHT", "Synaptics",
+        "Arm_Holdings", "Astera_Labs", "Credo_Technology", "Impinj", "Arteris",
+        "Allient", "Lumentum", "TE_Connectivity", "Qnity_Electronics",
+        "Mobix_Labs", "Geospace_Technologies", "Sensata_Technologies",
+    ], "Semiconductors"),
+    **dict.fromkeys([
+        "Applied_Materials", "Lam_Research", "KLA", "Axcelis_Technologies",
+        "Cohu", "Entegris", "FormFactor", "Ichor_Systems", "Photronics",
+        "SkyWater_Technology", "Kulicke_and_Soffa_Industries", "Veeco",
+        "UCT__Ultra_Clean_Holdings_", "Amtech_Systems", "Atomera",
+        "ACM_Research", "Aehr_Test_Systems", "Onto_Innovation", "PDF_Solutions",
+        "Amkor_Technology", "Keysight",
+    ], "Semiconductor Equipment"),
+    **dict.fromkeys([
+        "Microsoft", "Salesforce", "Workday", "ServiceNow", "Adobe", "Intuit",
+        "Oracle", "HubSpot", "Atlassian", "Asana", "DocuSign", "Box__Inc_",
+        "MongoDB", "Elastic_NV", "GitLab", "JFrog", "PagerDuty", "Nutanix",
+        "Guidewire_Software", "Bentley_Systems", "PTC", "Trimble",
+        "Roper_Technologies", "Autodesk", "Cadence_Design_Systems", "Synopsys",
+        "FactSet", "Fair_Isaac__FICO_", "Manhattan_Associates",
+        "SS_C_Technologies", "Tyler_Technologies", "Paycom", "Paylocity",
+        "Automatic_Data_Processing", "Jack_Henry__amp__Associates",
+        "Progress_Software", "BlackLine", "Veeva_Systems", "IQVIA",
+        "Certara", "Simulations_Plus", "Consensus_Cloud_Solutions", "OneStream",
+        "Intapp", "EverCommerce", "Appian", "Pegasystems",
+        "CCC_Intelligent_Solutions", "CSG_International",
+        "Donnelley_Financial_Solutions", "ePlus", "i3_Verticals", "PAR_Technology",
+        "ReposiTrak", "Workiva", "Agilysys", "Samsara", "ServiceTitan",
+        "Dayforce", "Blackbaud", "Commvault", "Domo", "Sprinklr", "Braze",
+        "Amplitude", "Clearwater_Analytics", "Clarivate", "Rimini_Street",
+        "Rackspace_Technology", "AvePoint", "N-Able", "Asure_Software",
+        "Alight", "Grid_Dynamics", "EPAM_Systems", "Genpact", "Teradata",
+        "Unisys", "IBM", "Xerox", "Conduent", "Diebold_Nixdorf",
+        "NCR_Atleos_Corporation", "NCR_Voyix_Corporation", "Leidos",
+        "SPS_Commerce", "Confluent", "Cimpress", "Cognyte_Software",
+        "LegalZoom", "Thryv", "Xperi", "Mitek_Systems", "ACI_Worldwide",
+        "Digimarc", "Cerence", "Dropbox", "Sprout_Social", "Digi_International",
+        "Procore", "CoStar_Group", "Freshworks", "Figma", "Klaviyo",
+        "Navan", "Toast", "UiPath", "Datadog", "Dynatrace", "Snowflake",
+        "Zeta_Global", "ZoomInfo", "Yext", "Semrush", "TechTarget", "ON24",
+        "Kaltura", "Chegg", "Coursera", "Udemy", "eGain", "Forian",
+        "Research_Solutions", "QXO__Inc_", "Quantum", "Penguin_Solutions",
+        "Vertex",
+    ], "Software & SaaS"),
+    **dict.fromkeys([
+        "CrowdStrike", "Palo_Alto_Networks", "Okta", "SentinelOne", "Fortinet",
+        "Zscaler", "Rapid7", "Qualys", "Tenable", "Varonis_Systems",
+        "NETSCOUT", "BlackBerry", "Gen_Digital", "Identiv", "SailPoint",
+        "Telos", "SoundThinking____ShotSpotter_", "Rubrik", "OneSpan",
+        "Intellicheck", "Castellum",
+    ], "Cybersecurity"),
+    **dict.fromkeys([
+        "Amazon", "Alphabet__Google_", "Cloudflare", "Fastly", "Akamai",
+        "Equinix", "DigitalOcean", "CoreWeave", "Backblaze",
+        "Pure_Storage", "NetApp", "Seagate_Technology", "Sandisk",
+        "F5", "Arista_Networks", "Cisco", "Calix", "A10_Networks",
+        "Harmonic_Inc_", "Sanmina", "Supermicro", "Dell",
+        "HP", "Hewlett_Packard_Enterprise", "NETGEAR", "Lantronix",
+        "One_Stop_Systems",
+    ], "Cloud & Infrastructure"),
+    **dict.fromkeys([
+        "Meta_Platforms__Facebook_", "Snap", "Reddit", "Nextdoor",
+        "Bumble", "Match_Group", "Grindr", "Life360", "Rumble",
+        "CuriosityStream", "Scienjoy_Holding_Corporation", "Sohu_com",
+        "Yelp", "ZipRecruiter", "QuinStreet", "Taboola_com", "LiveRamp",
+        "Digital_Turbine", "Viant_Technology", "DoubleVerify", "Criteo",
+        "PubMatic", "AppLovin", "The_Trade_Desk", "Tingo_Group", "Agora_io",
+        "MNTN__Inc_", "Teads",
+    ], "Social Media & Ad Tech"),
+    **dict.fromkeys([
+        "PayPal", "Block", "SoFi", "LendingClub", "LendingTree",
+        "Marqeta", "Upstart", "Dave_Inc_", "NerdWallet", "Remitly",
+        "Payoneer", "Paysign", "Flywire", "Repay_Holdings",
+        "Q2", "nCino", "Alkami_Technology", "Forge_Global",
+        "Pagaya_Technologies", "Priority_Technology_Holdings",
+        "Fiserv", "Global_Payments", "Fidelity_National_Information_Services",
+        "Futu_Holdings", "UP_Fintech__Tiger_Brokers_", "WM_Technology",
+        "Blend_Labs", "Expensify", "Robinhood", "MediaAlpha",
+        "Circle_Internet_Group", "Coinbase", "Ibotta", "Cantaloupe",
+        "Claritev", "PROG_Holdings", "Waystar", "Chime_Financial",
+        "Lesaka_Technologies", "Blackboxstocks",
+    ], "Fintech & Payments"),
+    **dict.fromkeys([
+        "Strategy____MicroStrategy_", "Bit_Digital", "MARA_Holdings",
+        "Riot_Platforms", "CleanSpark", "Core_Scientific", "Cipher_Mining",
+        "HIVE_Blockchain_Technologies", "Hut_8", "IREN__Iris_Energy_",
+        "TeraWulf", "Applied_Digital", "Bakkt_Holdings",
+        "TON_Strategy_Co_", "ALT5_Sigma", "Bitmine_Immersion_Technologies",
+        "Chaince_Digital_Holdings",
+    ], "Crypto & Blockchain"),
+    **dict.fromkeys([
+        "eBay", "Etsy", "Wayfair", "MercadoLibre", "Coupang",
+        "Chewy", "CarParts_com", "Revolve", "Stitch_Fix", "ThredUp",
+        "The_RealReal", "GigaCloud_Technology", "Liquidity_Services",
+        "Trip_com", "Booking_Holdings__Booking_com_", "Expedia_Group",
+        "Airbnb", "DoorDash", "Instacart__Maplebear_Inc__", "Groupon",
+        "1-800-PetMeds", "Sea_Limited", "The_Original_BARK_Company",
+    ], "E-commerce & Marketplace"),
+    **dict.fromkeys([
+        "Electronic_Arts", "Take-Two_Interactive", "Playtika", "Playstudios",
+        "Skillz", "Unity_Software", "Corsair_Gaming", "Netflix", "Spotify",
+        "Roku", "Shutterstock", "Getty_Images",
+    ], "Gaming & Entertainment"),
+    **dict.fromkeys([
+        "Apple", "Logitech", "Garmin", "Zebra_Technologies", "Protolabs",
+        "Latch", "SmartRent", "3D_Systems", "Vuzix", "Arlo_Technologies",
+    ], "Hardware & Devices"),
+    **dict.fromkeys([
+        "Palantir", "C3_AI", "BigBear_ai", "SoundHound_AI", "Tempus_AI",
+        "Veritone", "iLearningEngines", "Palladyne_AI", "IonQ",
+        "D-Wave_Quantum", "Rigetti_Computing", "Quantum_Computing",
+        "Symbotic", "Richtech_Robotics", "Ekso_Bionics", "Velo3D",
+        "MicroVision", "Odysight_ai", "Arrive_AI", "Fermi_Inc_",
+    ], "AI & Robotics"),
+    **dict.fromkeys([
+        "Tesla", "Uber", "Lyft", "Mobileye", "Aurora_Innovation",
+        "AEye", "Arbe_Robotics", "Ouster", "WeRide", "Red_Cat_Holdings",
+        "AgEagle_Aerial_Systems", "Ondas_Holdings", "Rekor_Systems",
+        "Marti_Technologies", "PowerFleet", "Airship_AI",
+        "Duos_Technologies_Group",
+    ], "EV & Mobility"),
+    **dict.fromkeys([
+        "8x8", "RingCentral", "Zoom", "Five9", "Twilio", "Tucows",
+        "Lumen_Technologies", "Comtech_Telecommunications", "Spire_Global",
+        "NextNav", "Synchronoss", "Spok_Holdings", "Genasys", "KORE",
+        "AST_SpaceMobile", "InterDigital", "Weave_Communications",
+    ], "Communications"),
+    **dict.fromkeys([
+        "Teladoc_Health", "Doximity", "American_Well", "Phreesia",
+        "Omnicell", "Veradigm", "Talkspace", "LifeStance_Health_Group",
+        "LifeMD", "eHealth", "OptimizeRx", "Schrödinger", "Align_Technology",
+        "Hims__amp__Hers_Health", "ANI_Pharmaceuticals", "Absci",
+    ], "Healthcare Technology"),
+    **dict.fromkeys([
+        "Enphase_Energy", "Stem__Inc",
+    ], "Clean Energy Technology"),
+    **dict.fromkeys([
+        "Compass", "reAlpha_Tech", "Zillow",
+    ], "Real Estate Technology"),
+    **dict.fromkeys([
+        "Hippo", "Lemonade", "Porch_Group",
+    ], "Insurtech"),
+    **dict.fromkeys([
+        "CLEAR_Secure", "CS_Disco", "Nerdy__Inc_", "BlackSky_Technology",
+        "Gloo_Holdings", "Where_Food_Comes_From", "Red_Violet",
+        "WhiteFiber", "Sabre",
+    ], "Other Technology"),
+}
+
+
+def companies_in_same_sector(selected_cos: list) -> list:
+    """Return all companies in the same sector(s) as the selected companies."""
+    sectors = {_SECTOR_OF.get(c, "Technology") for c in selected_cos}
+    return sorted(c for c in all_cos if _SECTOR_OF.get(c, "Technology") in sectors)
+
+
 # ── Latest quarter in dataset ────────────────────────────────────────────────
 _q_order = {"Q1": 1, "Q2": 2, "Q3": 3, "Q4": 4}
 _latest_row = (
@@ -1268,21 +1439,42 @@ with tab3:
                 unsafe_allow_html=True,
             )
 
+            _all_sectors = sorted({_SECTOR_OF.get(c, "Technology") for c in all_cos})
+            _DEFAULT_PEER_SECTOR = "Cloud & Infrastructure"
+            if "peer_sectors" not in st.session_state:
+                st.session_state["peer_sectors"] = (
+                    [_DEFAULT_PEER_SECTOR]
+                    if _DEFAULT_PEER_SECTOR in _all_sectors
+                    else _all_sectors[:1]
+                )
+            peer_sectors = st.multiselect(
+                "Industry",
+                _all_sectors,
+                key="peer_sectors",
+            )
+            if not peer_sectors:
+                peer_sectors = _all_sectors
+            same_sector_cos = sorted(
+                c for c in all_cos if _SECTOR_OF.get(c, "Technology") in set(peer_sectors)
+            )
+
             pctrl1, pctrl2 = st.columns([1.1, 0.9])
+            if "peer_line_mode" not in st.session_state:
+                st.session_state["peer_line_mode"] = "Top"
             peer_line_mode = pctrl1.selectbox(
                 "Line chart filter", ["All", "Top", "Bottom"], key="peer_line_mode"
             )
-            max_peer_n = max(1, min(10, len(selected)))
+            max_peer_n = max(1, min(10, len(same_sector_cos)))
             peer_line_n = safe_n_slider(
                 pctrl2, "N companies (peer line)", max_peer_n, 5, "peer_line_n"
             )
 
             peer_rank = ranked_company_scores(
-                selected, sel_year, sel_q, topic=peer_topic, col=score_col
+                same_sector_cos, sel_year, sel_q, topic=peer_topic, col=score_col
             )
             peer_line_df = apply_top_bottom(peer_rank, peer_line_mode, peer_line_n)
             peer_companies = (
-                peer_line_df["company"].tolist() if len(peer_line_df) else selected
+                peer_line_df["company"].tolist() if len(peer_line_df) else same_sector_cos
             )
 
             if len(peer_rank) == 0:
