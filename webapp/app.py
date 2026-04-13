@@ -132,164 +132,569 @@ co_colors = {
 # Maps company_name (as it appears in the dataset) to a sector string.
 # Companies not in this map default to "Technology".
 _SECTOR_OF: dict = {
-    **dict.fromkeys([
-        "NVIDIA", "AMD", "Intel", "Broadcom", "QUALCOMM", "Texas_Instruments",
-        "Microchip_Technology", "Micron_Technology", "Marvell_Technology",
-        "ON_Semiconductor", "NXP_Semiconductors", "Skyworks_Solutions", "Qorvo",
-        "Lattice_Semiconductor", "Silicon_Labs", "Monolithic_Power_Systems",
-        "Analog_Devices", "Cirrus_Logic", "MACOM", "Ambarella",
-        "Allegro_MicroSystems", "Alpha__amp__Omega_Semiconductor", "CEVA",
-        "Navitas_Semiconductor", "Semtech", "Power_Integrations", "SiTime",
-        "MaxLinear", "Pixelworks", "Everspin_Technologies", "GCT_Semiconductor",
-        "Intchains_Group", "Magnachip_Semiconductor", "Vishay_Intertechnology",
-        "Wolfspeed", "indie_Semiconductor", "Silvaco_Group", "Aeluma",
-        "Lightwave_Logic", "Coherent_Corp_", "Quicklogic", "nLIGHT", "Synaptics",
-        "Arm_Holdings", "Astera_Labs", "Credo_Technology", "Impinj", "Arteris",
-        "Allient", "Lumentum", "TE_Connectivity", "Qnity_Electronics",
-        "Mobix_Labs", "Geospace_Technologies", "Sensata_Technologies",
-    ], "Semiconductors"),
-    **dict.fromkeys([
-        "Applied_Materials", "Lam_Research", "KLA", "Axcelis_Technologies",
-        "Cohu", "Entegris", "FormFactor", "Ichor_Systems", "Photronics",
-        "SkyWater_Technology", "Kulicke_and_Soffa_Industries", "Veeco",
-        "UCT__Ultra_Clean_Holdings_", "Amtech_Systems", "Atomera",
-        "ACM_Research", "Aehr_Test_Systems", "Onto_Innovation", "PDF_Solutions",
-        "Amkor_Technology", "Keysight",
-    ], "Semiconductor Equipment"),
-    **dict.fromkeys([
-        "Microsoft", "Salesforce", "Workday", "ServiceNow", "Adobe", "Intuit",
-        "Oracle", "HubSpot", "Atlassian", "Asana", "DocuSign", "Box__Inc_",
-        "MongoDB", "Elastic_NV", "GitLab", "JFrog", "PagerDuty", "Nutanix",
-        "Guidewire_Software", "Bentley_Systems", "PTC", "Trimble",
-        "Roper_Technologies", "Autodesk", "Cadence_Design_Systems", "Synopsys",
-        "FactSet", "Fair_Isaac__FICO_", "Manhattan_Associates",
-        "SS_C_Technologies", "Tyler_Technologies", "Paycom", "Paylocity",
-        "Automatic_Data_Processing", "Jack_Henry__amp__Associates",
-        "Progress_Software", "BlackLine", "Veeva_Systems", "IQVIA",
-        "Certara", "Simulations_Plus", "Consensus_Cloud_Solutions", "OneStream",
-        "Intapp", "EverCommerce", "Appian", "Pegasystems",
-        "CCC_Intelligent_Solutions", "CSG_International",
-        "Donnelley_Financial_Solutions", "ePlus", "i3_Verticals", "PAR_Technology",
-        "ReposiTrak", "Workiva", "Agilysys", "Samsara", "ServiceTitan",
-        "Dayforce", "Blackbaud", "Commvault", "Domo", "Sprinklr", "Braze",
-        "Amplitude", "Clearwater_Analytics", "Clarivate", "Rimini_Street",
-        "Rackspace_Technology", "AvePoint", "N-Able", "Asure_Software",
-        "Alight", "Grid_Dynamics", "EPAM_Systems", "Genpact", "Teradata",
-        "Unisys", "IBM", "Xerox", "Conduent", "Diebold_Nixdorf",
-        "NCR_Atleos_Corporation", "NCR_Voyix_Corporation", "Leidos",
-        "SPS_Commerce", "Confluent", "Cimpress", "Cognyte_Software",
-        "LegalZoom", "Thryv", "Xperi", "Mitek_Systems", "ACI_Worldwide",
-        "Digimarc", "Cerence", "Dropbox", "Sprout_Social", "Digi_International",
-        "Procore", "CoStar_Group", "Freshworks", "Figma", "Klaviyo",
-        "Navan", "Toast", "UiPath", "Datadog", "Dynatrace", "Snowflake",
-        "Zeta_Global", "ZoomInfo", "Yext", "Semrush", "TechTarget", "ON24",
-        "Kaltura", "Chegg", "Coursera", "Udemy", "eGain", "Forian",
-        "Research_Solutions", "QXO__Inc_", "Quantum", "Penguin_Solutions",
-        "Vertex",
-    ], "Software & SaaS"),
-    **dict.fromkeys([
-        "CrowdStrike", "Palo_Alto_Networks", "Okta", "SentinelOne", "Fortinet",
-        "Zscaler", "Rapid7", "Qualys", "Tenable", "Varonis_Systems",
-        "NETSCOUT", "BlackBerry", "Gen_Digital", "Identiv", "SailPoint",
-        "Telos", "SoundThinking____ShotSpotter_", "Rubrik", "OneSpan",
-        "Intellicheck", "Castellum",
-    ], "Cybersecurity"),
-    **dict.fromkeys([
-        "Amazon", "Alphabet__Google_", "Cloudflare", "Fastly", "Akamai",
-        "Equinix", "DigitalOcean", "CoreWeave", "Backblaze",
-        "Pure_Storage", "NetApp", "Seagate_Technology", "Sandisk",
-        "F5", "Arista_Networks", "Cisco", "Calix", "A10_Networks",
-        "Harmonic_Inc_", "Sanmina", "Supermicro", "Dell",
-        "HP", "Hewlett_Packard_Enterprise", "NETGEAR", "Lantronix",
-        "One_Stop_Systems",
-    ], "Cloud & Infrastructure"),
-    **dict.fromkeys([
-        "Meta_Platforms__Facebook_", "Snap", "Reddit", "Nextdoor",
-        "Bumble", "Match_Group", "Grindr", "Life360", "Rumble",
-        "CuriosityStream", "Scienjoy_Holding_Corporation", "Sohu_com",
-        "Yelp", "ZipRecruiter", "QuinStreet", "Taboola_com", "LiveRamp",
-        "Digital_Turbine", "Viant_Technology", "DoubleVerify", "Criteo",
-        "PubMatic", "AppLovin", "The_Trade_Desk", "Tingo_Group", "Agora_io",
-        "MNTN__Inc_", "Teads",
-    ], "Social Media & Ad Tech"),
-    **dict.fromkeys([
-        "PayPal", "Block", "SoFi", "LendingClub", "LendingTree",
-        "Marqeta", "Upstart", "Dave_Inc_", "NerdWallet", "Remitly",
-        "Payoneer", "Paysign", "Flywire", "Repay_Holdings",
-        "Q2", "nCino", "Alkami_Technology", "Forge_Global",
-        "Pagaya_Technologies", "Priority_Technology_Holdings",
-        "Fiserv", "Global_Payments", "Fidelity_National_Information_Services",
-        "Futu_Holdings", "UP_Fintech__Tiger_Brokers_", "WM_Technology",
-        "Blend_Labs", "Expensify", "Robinhood", "MediaAlpha",
-        "Circle_Internet_Group", "Coinbase", "Ibotta", "Cantaloupe",
-        "Claritev", "PROG_Holdings", "Waystar", "Chime_Financial",
-        "Lesaka_Technologies", "Blackboxstocks",
-    ], "Fintech & Payments"),
-    **dict.fromkeys([
-        "Strategy____MicroStrategy_", "Bit_Digital", "MARA_Holdings",
-        "Riot_Platforms", "CleanSpark", "Core_Scientific", "Cipher_Mining",
-        "HIVE_Blockchain_Technologies", "Hut_8", "IREN__Iris_Energy_",
-        "TeraWulf", "Applied_Digital", "Bakkt_Holdings",
-        "TON_Strategy_Co_", "ALT5_Sigma", "Bitmine_Immersion_Technologies",
-        "Chaince_Digital_Holdings",
-    ], "Crypto & Blockchain"),
-    **dict.fromkeys([
-        "eBay", "Etsy", "Wayfair", "MercadoLibre", "Coupang",
-        "Chewy", "CarParts_com", "Revolve", "Stitch_Fix", "ThredUp",
-        "The_RealReal", "GigaCloud_Technology", "Liquidity_Services",
-        "Trip_com", "Booking_Holdings__Booking_com_", "Expedia_Group",
-        "Airbnb", "DoorDash", "Instacart__Maplebear_Inc__", "Groupon",
-        "1-800-PetMeds", "Sea_Limited", "The_Original_BARK_Company",
-    ], "E-commerce & Marketplace"),
-    **dict.fromkeys([
-        "Electronic_Arts", "Take-Two_Interactive", "Playtika", "Playstudios",
-        "Skillz", "Unity_Software", "Corsair_Gaming", "Netflix", "Spotify",
-        "Roku", "Shutterstock", "Getty_Images",
-    ], "Gaming & Entertainment"),
-    **dict.fromkeys([
-        "Apple", "Logitech", "Garmin", "Zebra_Technologies", "Protolabs",
-        "Latch", "SmartRent", "3D_Systems", "Vuzix", "Arlo_Technologies",
-    ], "Hardware & Devices"),
-    **dict.fromkeys([
-        "Palantir", "C3_AI", "BigBear_ai", "SoundHound_AI", "Tempus_AI",
-        "Veritone", "iLearningEngines", "Palladyne_AI", "IonQ",
-        "D-Wave_Quantum", "Rigetti_Computing", "Quantum_Computing",
-        "Symbotic", "Richtech_Robotics", "Ekso_Bionics", "Velo3D",
-        "MicroVision", "Odysight_ai", "Arrive_AI", "Fermi_Inc_",
-    ], "AI & Robotics"),
-    **dict.fromkeys([
-        "Tesla", "Uber", "Lyft", "Mobileye", "Aurora_Innovation",
-        "AEye", "Arbe_Robotics", "Ouster", "WeRide", "Red_Cat_Holdings",
-        "AgEagle_Aerial_Systems", "Ondas_Holdings", "Rekor_Systems",
-        "Marti_Technologies", "PowerFleet", "Airship_AI",
-        "Duos_Technologies_Group",
-    ], "EV & Mobility"),
-    **dict.fromkeys([
-        "8x8", "RingCentral", "Zoom", "Five9", "Twilio", "Tucows",
-        "Lumen_Technologies", "Comtech_Telecommunications", "Spire_Global",
-        "NextNav", "Synchronoss", "Spok_Holdings", "Genasys", "KORE",
-        "AST_SpaceMobile", "InterDigital", "Weave_Communications",
-    ], "Communications"),
-    **dict.fromkeys([
-        "Teladoc_Health", "Doximity", "American_Well", "Phreesia",
-        "Omnicell", "Veradigm", "Talkspace", "LifeStance_Health_Group",
-        "LifeMD", "eHealth", "OptimizeRx", "Schrödinger", "Align_Technology",
-        "Hims__amp__Hers_Health", "ANI_Pharmaceuticals", "Absci",
-    ], "Healthcare Technology"),
-    **dict.fromkeys([
-        "Enphase_Energy", "Stem__Inc",
-    ], "Clean Energy Technology"),
-    **dict.fromkeys([
-        "Compass", "reAlpha_Tech", "Zillow",
-    ], "Real Estate Technology"),
-    **dict.fromkeys([
-        "Hippo", "Lemonade", "Porch_Group",
-    ], "Insurtech"),
-    **dict.fromkeys([
-        "CLEAR_Secure", "CS_Disco", "Nerdy__Inc_", "BlackSky_Technology",
-        "Gloo_Holdings", "Where_Food_Comes_From", "Red_Violet",
-        "WhiteFiber", "Sabre",
-    ], "Other Technology"),
+    **dict.fromkeys(
+        [
+            "NVIDIA",
+            "AMD",
+            "Intel",
+            "Broadcom",
+            "QUALCOMM",
+            "Texas_Instruments",
+            "Microchip_Technology",
+            "Micron_Technology",
+            "Marvell_Technology",
+            "ON_Semiconductor",
+            "NXP_Semiconductors",
+            "Skyworks_Solutions",
+            "Qorvo",
+            "Lattice_Semiconductor",
+            "Silicon_Labs",
+            "Monolithic_Power_Systems",
+            "Analog_Devices",
+            "Cirrus_Logic",
+            "MACOM",
+            "Ambarella",
+            "Allegro_MicroSystems",
+            "Alpha__amp__Omega_Semiconductor",
+            "CEVA",
+            "Navitas_Semiconductor",
+            "Semtech",
+            "Power_Integrations",
+            "SiTime",
+            "MaxLinear",
+            "Pixelworks",
+            "Everspin_Technologies",
+            "GCT_Semiconductor",
+            "Intchains_Group",
+            "Magnachip_Semiconductor",
+            "Vishay_Intertechnology",
+            "Wolfspeed",
+            "indie_Semiconductor",
+            "Silvaco_Group",
+            "Aeluma",
+            "Lightwave_Logic",
+            "Coherent_Corp_",
+            "Quicklogic",
+            "nLIGHT",
+            "Synaptics",
+            "Arm_Holdings",
+            "Astera_Labs",
+            "Credo_Technology",
+            "Impinj",
+            "Arteris",
+            "Allient",
+            "Lumentum",
+            "TE_Connectivity",
+            "Qnity_Electronics",
+            "Mobix_Labs",
+            "Geospace_Technologies",
+            "Sensata_Technologies",
+        ],
+        "Semiconductors",
+    ),
+    **dict.fromkeys(
+        [
+            "Applied_Materials",
+            "Lam_Research",
+            "KLA",
+            "Axcelis_Technologies",
+            "Cohu",
+            "Entegris",
+            "FormFactor",
+            "Ichor_Systems",
+            "Photronics",
+            "SkyWater_Technology",
+            "Kulicke_and_Soffa_Industries",
+            "Veeco",
+            "UCT__Ultra_Clean_Holdings_",
+            "Amtech_Systems",
+            "Atomera",
+            "ACM_Research",
+            "Aehr_Test_Systems",
+            "Onto_Innovation",
+            "PDF_Solutions",
+            "Amkor_Technology",
+            "Keysight",
+        ],
+        "Semiconductor Equipment",
+    ),
+    **dict.fromkeys(
+        [
+            "Microsoft",
+            "Salesforce",
+            "Workday",
+            "ServiceNow",
+            "Adobe",
+            "Intuit",
+            "Oracle",
+            "HubSpot",
+            "Atlassian",
+            "Asana",
+            "DocuSign",
+            "Box__Inc_",
+            "MongoDB",
+            "Elastic_NV",
+            "GitLab",
+            "JFrog",
+            "PagerDuty",
+            "Nutanix",
+            "Guidewire_Software",
+            "Bentley_Systems",
+            "PTC",
+            "Trimble",
+            "Roper_Technologies",
+            "Autodesk",
+            "Cadence_Design_Systems",
+            "Synopsys",
+            "FactSet",
+            "Fair_Isaac__FICO_",
+            "Manhattan_Associates",
+            "SS_C_Technologies",
+            "Tyler_Technologies",
+            "Paycom",
+            "Paylocity",
+            "Automatic_Data_Processing",
+            "Jack_Henry__amp__Associates",
+            "Progress_Software",
+            "BlackLine",
+            "Veeva_Systems",
+            "IQVIA",
+            "Certara",
+            "Simulations_Plus",
+            "Consensus_Cloud_Solutions",
+            "OneStream",
+            "Intapp",
+            "EverCommerce",
+            "Appian",
+            "Pegasystems",
+            "CCC_Intelligent_Solutions",
+            "CSG_International",
+            "Donnelley_Financial_Solutions",
+            "ePlus",
+            "i3_Verticals",
+            "PAR_Technology",
+            "ReposiTrak",
+            "Workiva",
+            "Agilysys",
+            "Samsara",
+            "ServiceTitan",
+            "Dayforce",
+            "Blackbaud",
+            "Commvault",
+            "Domo",
+            "Sprinklr",
+            "Braze",
+            "Amplitude",
+            "Clearwater_Analytics",
+            "Clarivate",
+            "Rimini_Street",
+            "Rackspace_Technology",
+            "AvePoint",
+            "N-Able",
+            "Asure_Software",
+            "Alight",
+            "Grid_Dynamics",
+            "EPAM_Systems",
+            "Genpact",
+            "Teradata",
+            "Unisys",
+            "IBM",
+            "Xerox",
+            "Conduent",
+            "Diebold_Nixdorf",
+            "NCR_Atleos_Corporation",
+            "NCR_Voyix_Corporation",
+            "Leidos",
+            "SPS_Commerce",
+            "Confluent",
+            "Cimpress",
+            "Cognyte_Software",
+            "LegalZoom",
+            "Thryv",
+            "Xperi",
+            "Mitek_Systems",
+            "ACI_Worldwide",
+            "Digimarc",
+            "Cerence",
+            "Dropbox",
+            "Sprout_Social",
+            "Digi_International",
+            "Procore",
+            "CoStar_Group",
+            "Freshworks",
+            "Figma",
+            "Klaviyo",
+            "Navan",
+            "Toast",
+            "UiPath",
+            "Datadog",
+            "Dynatrace",
+            "Snowflake",
+            "Zeta_Global",
+            "ZoomInfo",
+            "Yext",
+            "Semrush",
+            "TechTarget",
+            "ON24",
+            "Kaltura",
+            "Chegg",
+            "Coursera",
+            "Udemy",
+            "eGain",
+            "Forian",
+            "Research_Solutions",
+            "QXO__Inc_",
+            "Quantum",
+            "Penguin_Solutions",
+            "Vertex",
+        ],
+        "Software & SaaS",
+    ),
+    **dict.fromkeys(
+        [
+            "CrowdStrike",
+            "Palo_Alto_Networks",
+            "Okta",
+            "SentinelOne",
+            "Fortinet",
+            "Zscaler",
+            "Rapid7",
+            "Qualys",
+            "Tenable",
+            "Varonis_Systems",
+            "NETSCOUT",
+            "BlackBerry",
+            "Gen_Digital",
+            "Identiv",
+            "SailPoint",
+            "Telos",
+            "SoundThinking____ShotSpotter_",
+            "Rubrik",
+            "OneSpan",
+            "Intellicheck",
+            "Castellum",
+        ],
+        "Cybersecurity",
+    ),
+    **dict.fromkeys(
+        [
+            "Amazon",
+            "Alphabet__Google_",
+            "Cloudflare",
+            "Fastly",
+            "Akamai",
+            "Equinix",
+            "DigitalOcean",
+            "CoreWeave",
+            "Backblaze",
+            "Pure_Storage",
+            "NetApp",
+            "Seagate_Technology",
+            "Sandisk",
+            "F5",
+            "Arista_Networks",
+            "Cisco",
+            "Calix",
+            "A10_Networks",
+            "Harmonic_Inc_",
+            "Sanmina",
+            "Supermicro",
+            "Dell",
+            "HP",
+            "Hewlett_Packard_Enterprise",
+            "NETGEAR",
+            "Lantronix",
+            "One_Stop_Systems",
+        ],
+        "Cloud & Infrastructure",
+    ),
+    **dict.fromkeys(
+        [
+            "Meta_Platforms__Facebook_",
+            "Snap",
+            "Reddit",
+            "Nextdoor",
+            "Bumble",
+            "Match_Group",
+            "Grindr",
+            "Life360",
+            "Rumble",
+            "CuriosityStream",
+            "Scienjoy_Holding_Corporation",
+            "Sohu_com",
+            "Yelp",
+            "ZipRecruiter",
+            "QuinStreet",
+            "Taboola_com",
+            "LiveRamp",
+            "Digital_Turbine",
+            "Viant_Technology",
+            "DoubleVerify",
+            "Criteo",
+            "PubMatic",
+            "AppLovin",
+            "The_Trade_Desk",
+            "Tingo_Group",
+            "Agora_io",
+            "MNTN__Inc_",
+            "Teads",
+        ],
+        "Social Media & Ad Tech",
+    ),
+    **dict.fromkeys(
+        [
+            "PayPal",
+            "Block",
+            "SoFi",
+            "LendingClub",
+            "LendingTree",
+            "Marqeta",
+            "Upstart",
+            "Dave_Inc_",
+            "NerdWallet",
+            "Remitly",
+            "Payoneer",
+            "Paysign",
+            "Flywire",
+            "Repay_Holdings",
+            "Q2",
+            "nCino",
+            "Alkami_Technology",
+            "Forge_Global",
+            "Pagaya_Technologies",
+            "Priority_Technology_Holdings",
+            "Fiserv",
+            "Global_Payments",
+            "Fidelity_National_Information_Services",
+            "Futu_Holdings",
+            "UP_Fintech__Tiger_Brokers_",
+            "WM_Technology",
+            "Blend_Labs",
+            "Expensify",
+            "Robinhood",
+            "MediaAlpha",
+            "Circle_Internet_Group",
+            "Coinbase",
+            "Ibotta",
+            "Cantaloupe",
+            "Claritev",
+            "PROG_Holdings",
+            "Waystar",
+            "Chime_Financial",
+            "Lesaka_Technologies",
+            "Blackboxstocks",
+        ],
+        "Fintech & Payments",
+    ),
+    **dict.fromkeys(
+        [
+            "Strategy____MicroStrategy_",
+            "Bit_Digital",
+            "MARA_Holdings",
+            "Riot_Platforms",
+            "CleanSpark",
+            "Core_Scientific",
+            "Cipher_Mining",
+            "HIVE_Blockchain_Technologies",
+            "Hut_8",
+            "IREN__Iris_Energy_",
+            "TeraWulf",
+            "Applied_Digital",
+            "Bakkt_Holdings",
+            "TON_Strategy_Co_",
+            "ALT5_Sigma",
+            "Bitmine_Immersion_Technologies",
+            "Chaince_Digital_Holdings",
+        ],
+        "Crypto & Blockchain",
+    ),
+    **dict.fromkeys(
+        [
+            "eBay",
+            "Etsy",
+            "Wayfair",
+            "MercadoLibre",
+            "Coupang",
+            "Chewy",
+            "CarParts_com",
+            "Revolve",
+            "Stitch_Fix",
+            "ThredUp",
+            "The_RealReal",
+            "GigaCloud_Technology",
+            "Liquidity_Services",
+            "Trip_com",
+            "Booking_Holdings__Booking_com_",
+            "Expedia_Group",
+            "Airbnb",
+            "DoorDash",
+            "Instacart__Maplebear_Inc__",
+            "Groupon",
+            "1-800-PetMeds",
+            "Sea_Limited",
+            "The_Original_BARK_Company",
+        ],
+        "E-commerce & Marketplace",
+    ),
+    **dict.fromkeys(
+        [
+            "Electronic_Arts",
+            "Take-Two_Interactive",
+            "Playtika",
+            "Playstudios",
+            "Skillz",
+            "Unity_Software",
+            "Corsair_Gaming",
+            "Netflix",
+            "Spotify",
+            "Roku",
+            "Shutterstock",
+            "Getty_Images",
+        ],
+        "Gaming & Entertainment",
+    ),
+    **dict.fromkeys(
+        [
+            "Apple",
+            "Logitech",
+            "Garmin",
+            "Zebra_Technologies",
+            "Protolabs",
+            "Latch",
+            "SmartRent",
+            "3D_Systems",
+            "Vuzix",
+            "Arlo_Technologies",
+        ],
+        "Hardware & Devices",
+    ),
+    **dict.fromkeys(
+        [
+            "Palantir",
+            "C3_AI",
+            "BigBear_ai",
+            "SoundHound_AI",
+            "Tempus_AI",
+            "Veritone",
+            "iLearningEngines",
+            "Palladyne_AI",
+            "IonQ",
+            "D-Wave_Quantum",
+            "Rigetti_Computing",
+            "Quantum_Computing",
+            "Symbotic",
+            "Richtech_Robotics",
+            "Ekso_Bionics",
+            "Velo3D",
+            "MicroVision",
+            "Odysight_ai",
+            "Arrive_AI",
+            "Fermi_Inc_",
+        ],
+        "AI & Robotics",
+    ),
+    **dict.fromkeys(
+        [
+            "Tesla",
+            "Uber",
+            "Lyft",
+            "Mobileye",
+            "Aurora_Innovation",
+            "AEye",
+            "Arbe_Robotics",
+            "Ouster",
+            "WeRide",
+            "Red_Cat_Holdings",
+            "AgEagle_Aerial_Systems",
+            "Ondas_Holdings",
+            "Rekor_Systems",
+            "Marti_Technologies",
+            "PowerFleet",
+            "Airship_AI",
+            "Duos_Technologies_Group",
+        ],
+        "EV & Mobility",
+    ),
+    **dict.fromkeys(
+        [
+            "8x8",
+            "RingCentral",
+            "Zoom",
+            "Five9",
+            "Twilio",
+            "Tucows",
+            "Lumen_Technologies",
+            "Comtech_Telecommunications",
+            "Spire_Global",
+            "NextNav",
+            "Synchronoss",
+            "Spok_Holdings",
+            "Genasys",
+            "KORE",
+            "AST_SpaceMobile",
+            "InterDigital",
+            "Weave_Communications",
+        ],
+        "Communications",
+    ),
+    **dict.fromkeys(
+        [
+            "Teladoc_Health",
+            "Doximity",
+            "American_Well",
+            "Phreesia",
+            "Omnicell",
+            "Veradigm",
+            "Talkspace",
+            "LifeStance_Health_Group",
+            "LifeMD",
+            "eHealth",
+            "OptimizeRx",
+            "Schrödinger",
+            "Align_Technology",
+            "Hims__amp__Hers_Health",
+            "ANI_Pharmaceuticals",
+            "Absci",
+        ],
+        "Healthcare Technology",
+    ),
+    **dict.fromkeys(
+        [
+            "Enphase_Energy",
+            "Stem__Inc",
+        ],
+        "Clean Energy Technology",
+    ),
+    **dict.fromkeys(
+        [
+            "Compass",
+            "reAlpha_Tech",
+            "Zillow",
+        ],
+        "Real Estate Technology",
+    ),
+    **dict.fromkeys(
+        [
+            "Hippo",
+            "Lemonade",
+            "Porch_Group",
+        ],
+        "Insurtech",
+    ),
+    **dict.fromkeys(
+        [
+            "CLEAR_Secure",
+            "CS_Disco",
+            "Nerdy__Inc_",
+            "BlackSky_Technology",
+            "Gloo_Holdings",
+            "Where_Food_Comes_From",
+            "Red_Violet",
+            "WhiteFiber",
+            "Sabre",
+        ],
+        "Other Technology",
+    ),
 }
 
 
@@ -574,7 +979,7 @@ with st.sidebar:
         key = f"w_{changed_c}"
         if key not in st.session_state:
             return
-        
+
         new_val = max(0, min(100, st.session_state[key]))
         new_val = max(0, min(100, st.session_state[f"w_{changed_c}"]))
         others = [c for c in selected if c != changed_c]
@@ -1455,7 +1860,9 @@ with tab3:
             if not peer_sectors:
                 peer_sectors = _all_sectors
             same_sector_cos = sorted(
-                c for c in all_cos if _SECTOR_OF.get(c, "Technology") in set(peer_sectors)
+                c
+                for c in all_cos
+                if _SECTOR_OF.get(c, "Technology") in set(peer_sectors)
             )
 
             pctrl1, pctrl2 = st.columns([1.1, 0.9])
@@ -1474,7 +1881,9 @@ with tab3:
             )
             peer_line_df = apply_top_bottom(peer_rank, peer_line_mode, peer_line_n)
             peer_companies = (
-                peer_line_df["company"].tolist() if len(peer_line_df) else same_sector_cos
+                peer_line_df["company"].tolist()
+                if len(peer_line_df)
+                else same_sector_cos
             )
 
             if len(peer_rank) == 0:
@@ -1669,7 +2078,9 @@ with tab4:
     _msft_default = next(
         (i for i, c in enumerate(all_cos) if "microsoft" in c.lower()), 0
     )
-    f_co = fc1.selectbox("Company", all_cos, index=_msft_default, format_func=dn, key="t4_co")
+    f_co = fc1.selectbox(
+        "Company", all_cos, index=_msft_default, format_func=dn, key="t4_co"
+    )
     f_yr = fc2.selectbox("Year", list(reversed(avail_yrs)), key="t4_yr")
     f_q = fc3.selectbox("Quarter", ["Q4", "Q3", "Q2", "Q1"], key="t4_q")
 
@@ -1685,7 +2096,11 @@ with tab4:
         f_pos = float(fd["pos_prob"].mean())
         f_neu = float(fd["neu_prob"].mean())
         f_neg = float(fd["neg_prob"].mean())
-        f_net = float(fd["sentiment_score"].mean()) if "sentiment_score" in fd.columns else f_pos - f_neg
+        f_net = (
+            float(fd["sentiment_score"].mean())
+            if "sentiment_score" in fd.columns
+            else f_pos - f_neg
+        )
 
         def _sent_label(s):
             if s >= 0.5:
@@ -1756,7 +2171,7 @@ with tab4:
         for col, label, value, color, icon in [
             (mc1, "Avg Positive Probability", f_pos, "#16a34a", "●"),
             (mc2, "Avg Negative Probability", f_neg, "#dc2626", "●"),
-            (mc3, "Avg Neutral Probability",  f_neu, "#6b7280", "●"),
+            (mc3, "Avg Neutral Probability", f_neu, "#6b7280", "●"),
         ]:
             col.markdown(
                 f"""
@@ -1778,12 +2193,19 @@ with tab4:
             fd.groupby("topic_label")[["pos_prob", "neg_prob", "sentiment_score"]]
             .mean()
             .reset_index()
-            .rename(columns={"topic_label": "Topic", "pos_prob": "Avg pos", "neg_prob": "Avg neg", "sentiment_score": "Net"})
+            .rename(
+                columns={
+                    "topic_label": "Topic",
+                    "pos_prob": "Avg pos",
+                    "neg_prob": "Avg neg",
+                    "sentiment_score": "Net",
+                }
+            )
             .sort_values("Net", ascending=False)
         )
 
         if len(topic_df) >= 2:
-            opp_topic  = topic_df.iloc[0]
+            opp_topic = topic_df.iloc[0]
             risk_topic = topic_df.iloc[-1]
             sig1, sig2 = st.columns(2)
             sig1.markdown(
@@ -1793,8 +2215,8 @@ with tab4:
                   <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#dc2626;
                              letter-spacing:.08em;text-transform:uppercase;">● Top Risk Signal</p>
                   <p style="margin:0;font-size:14px;color:#374151;line-height:1.55;">
-                    Topic <strong>{risk_topic['Topic']}</strong> has the lowest net sentiment
-                    (<strong>{risk_topic['Net']:+.2f}</strong>) — highest negative exposure in this filing.
+                    Topic <strong>{risk_topic["Topic"]}</strong> has the lowest net sentiment
+                    (<strong>{risk_topic["Net"]:+.2f}</strong>) — highest negative exposure in this filing.
                   </p>
                 </div>
                 """,
@@ -1807,8 +2229,8 @@ with tab4:
                   <p style="margin:0 0 8px;font-size:11px;font-weight:700;color:#16a34a;
                              letter-spacing:.08em;text-transform:uppercase;">● Top Opportunity Signal</p>
                   <p style="margin:0;font-size:14px;color:#374151;line-height:1.55;">
-                    Topic <strong>{opp_topic['Topic']}</strong> has the highest net sentiment
-                    (<strong>{opp_topic['Net']:+.2f}</strong>) — strongest positive signal in this filing.
+                    Topic <strong>{opp_topic["Topic"]}</strong> has the highest net sentiment
+                    (<strong>{opp_topic["Net"]:+.2f}</strong>) — strongest positive signal in this filing.
                   </p>
                 </div>
                 """,
@@ -1818,8 +2240,16 @@ with tab4:
 
         # ── Topics (LDA) card list + histogram ───────────────────────────────
         _TOPIC_COLORS = [
-            "#16a34a","#f59e0b","#dc2626","#2563eb","#7c3aed",
-            "#0891b2","#be185d","#65a30d","#ea580c","#6b7280",
+            "#16a34a",
+            "#f59e0b",
+            "#dc2626",
+            "#2563eb",
+            "#7c3aed",
+            "#0891b2",
+            "#be185d",
+            "#65a30d",
+            "#ea580c",
+            "#6b7280",
         ]
         topic_color_map = {
             t: _TOPIC_COLORS[i % len(_TOPIC_COLORS)]
@@ -1845,14 +2275,14 @@ with tab4:
                                 box-shadow:0 1px 3px rgba(0,0,0,.04);">
                       <div style="display:flex;justify-content:space-between;align-items:center;">
                         <span style="font-size:14px;font-weight:600;color:#111827;">
-                          <span style="color:{c};margin-right:6px;">●</span>{row['Topic']}
+                          <span style="color:{c};margin-right:6px;">●</span>{row["Topic"]}
                         </span>
                         <span style="font-size:16px;font-weight:700;color:{net_color};">
                           {sign_t}{net:.2f}
                         </span>
                       </div>
                       <div style="font-size:11px;color:#6b7280;margin-top:3px;padding-left:20px;">
-                        pos {row['Avg pos']:.2f} &nbsp;/&nbsp; neg {row['Avg neg']:.2f}
+                        pos {row["Avg pos"]:.2f} &nbsp;/&nbsp; neg {row["Avg neg"]:.2f}
                       </div>
                     </div>
                     """,
@@ -1880,8 +2310,7 @@ with tab4:
             co_ts = co_ts.sort_values("period_key")
 
             avg_ts = (
-                merged
-                .groupby(["year", "quarter"])
+                merged.groupby(["year", "quarter"])
                 .apply(lambda g: float(g["pos_prob"].mean() - g["neg_prob"].mean()))
                 .reset_index(name="net")
             )
@@ -1893,43 +2322,59 @@ with tab4:
             all_periods = avg_ts[["period", "period_key"]].drop_duplicates()  # type: ignore[union-attr]
             all_periods = all_periods.sort_values(by="period_key")  # type: ignore[union-attr]
 
-            co_ts_full = all_periods.merge(co_ts[["period", "net"]], on="period", how="left")
-            avg_ts_full = all_periods.merge(avg_ts[["period", "net"]], on="period", how="left")
+            co_ts_full = all_periods.merge(
+                co_ts[["period", "net"]], on="period", how="left"
+            )
+            avg_ts_full = all_periods.merge(
+                avg_ts[["period", "net"]], on="period", how="left"
+            )
 
             fig_cmp = go.Figure()
-            fig_cmp.add_trace(go.Scatter(
-                x=avg_ts_full["period"],
-                y=avg_ts_full["net"],
-                mode="lines",
-                name="Corpus avg",
-                line=dict(color="#9ca3af", width=2, dash="dot"),
-                hovertemplate="%{x}<br>Avg: %{y:.3f}<extra></extra>",
-            ))
-            fig_cmp.add_trace(go.Scatter(
-                x=co_ts_full["period"],
-                y=co_ts_full["net"],
-                mode="lines+markers",
-                name=dn(f_co),
-                line=dict(color="#16a34a", width=2.5),
-                marker=dict(size=5, color="#16a34a"),
-                hovertemplate="%{x}<br>" + dn(f_co) + ": %{y:.3f}<extra></extra>",
-            ))
+            fig_cmp.add_trace(
+                go.Scatter(
+                    x=avg_ts_full["period"],
+                    y=avg_ts_full["net"],
+                    mode="lines",
+                    name="Corpus avg",
+                    line=dict(color="#9ca3af", width=2, dash="dot"),
+                    hovertemplate="%{x}<br>Avg: %{y:.3f}<extra></extra>",
+                )
+            )
+            fig_cmp.add_trace(
+                go.Scatter(
+                    x=co_ts_full["period"],
+                    y=co_ts_full["net"],
+                    mode="lines+markers",
+                    name=dn(f_co),
+                    line=dict(color="#16a34a", width=2.5),
+                    marker=dict(size=5, color="#16a34a"),
+                    hovertemplate="%{x}<br>" + dn(f_co) + ": %{y:.3f}<extra></extra>",
+                )
+            )
 
             # mark the selected quarter
             sel_period = f"{f_yr} {f_q}"
             sel_row = co_ts_full[co_ts_full["period"] == sel_period]
             if len(sel_row) and not pd.isna(sel_row["net"].iloc[0]):
-                fig_cmp.add_trace(go.Scatter(
-                    x=[sel_period],
-                    y=[sel_row["net"].iloc[0]],
-                    mode="markers",
-                    name="Selected quarter",
-                    marker=dict(color="#16a34a", size=13, symbol="circle",
-                                line=dict(color="white", width=2)),
-                    hovertemplate=f"{sel_period}<br>{dn(f_co)}: %{{y:.3f}}<extra></extra>",
-                ))
+                fig_cmp.add_trace(
+                    go.Scatter(
+                        x=[sel_period],
+                        y=[sel_row["net"].iloc[0]],
+                        mode="markers",
+                        name="Selected quarter",
+                        marker=dict(
+                            color="#16a34a",
+                            size=13,
+                            symbol="circle",
+                            line=dict(color="white", width=2),
+                        ),
+                        hovertemplate=f"{sel_period}<br>{dn(f_co)}: %{{y:.3f}}<extra></extra>",
+                    )
+                )
 
-            fig_cmp.add_hline(y=0, line_dash="solid", line_color="#e5e7eb", line_width=1)
+            fig_cmp.add_hline(
+                y=0, line_dash="solid", line_color="#e5e7eb", line_width=1
+            )
 
             # show one tick label per year (Q1 of each year) to avoid crowding
             year_q1_periods = [
@@ -1939,7 +2384,9 @@ with tab4:
                 height=460,
                 xaxis_title="Quarter",
                 yaxis_title="Net sentiment (pos − neg)",
-                legend=dict(orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1),
+                legend=dict(
+                    orientation="h", yanchor="bottom", y=1.02, xanchor="right", x=1
+                ),
                 xaxis=dict(
                     tickmode="array",
                     tickvals=year_q1_periods,
@@ -2048,13 +2495,28 @@ with tab5:
 
                 # avg_pos: mean pos_prob over positive-labeled sentences only
                 # avg_neg: mean neg_prob over negative-labeled sentences only
-                _kw_pos = tm_df[tm_df["finbert_label"] == "positive"].groupby("topic_label")["pos_prob"].mean()
-                _kw_pos = pd.DataFrame({"Topic": _kw_pos.index, "Avg pos": _kw_pos.values})
-                _kw_neg = tm_df[tm_df["finbert_label"] == "negative"].groupby("topic_label")["neg_prob"].mean()
-                _kw_neg = pd.DataFrame({"Topic": _kw_neg.index, "Avg neg": _kw_neg.values})
+                _kw_pos = (
+                    tm_df[tm_df["finbert_label"] == "positive"]
+                    .groupby("topic_label")["pos_prob"]
+                    .mean()
+                )
+                _kw_pos = pd.DataFrame(
+                    {"Topic": _kw_pos.index, "Avg pos": _kw_pos.values}
+                )
+                _kw_neg = (
+                    tm_df[tm_df["finbert_label"] == "negative"]
+                    .groupby("topic_label")["neg_prob"]
+                    .mean()
+                )
+                _kw_neg = pd.DataFrame(
+                    {"Topic": _kw_neg.index, "Avg neg": _kw_neg.values}
+                )
                 kw_df = (
-                    kw_df
-                    .merge(topic_stats[["Topic", "docs"]].rename(columns={"docs": "Docs"}), on="Topic", how="left")
+                    kw_df.merge(
+                        topic_stats[["Topic", "docs"]].rename(columns={"docs": "Docs"}),
+                        on="Topic",
+                        how="left",
+                    )
                     .merge(_kw_pos, on="Topic", how="left")
                     .merge(_kw_neg, on="Topic", how="left")
                 )
