@@ -1,6 +1,6 @@
 # Financial NLP: SEC MD&A Sentiment & Topic Analysis
 
-NLP pipeline for analysing Management Discussion & Analysis (MD&A) sections from SEC 10-K/10-Q filings — covering sentiment classification and topic modelling across 473 technology companies (2010–2025).
+NLP pipeline for analysing Management Discussion & Analysis (MD&A) sections from SEC 10-K/10-Q filings — covering sentiment classification and topic modelling across 570 companies (2010–2025).
 
 ---
 
